@@ -1,7 +1,9 @@
-from manim import Scene, Mobject
-import pyperclip
-
 from collections import OrderedDict
+import pyperclip
+import textwrap
+
+from manim import Scene, Mobject
+
 
 
 # Cleans up interface when uncommented
@@ -75,13 +77,15 @@ class CheckpointManager:
     if len(checkpoint_key)>0:
       print(f"Checkpointing : {checkpoint_key=}")
       self.handle_checkpoint_key(scene_showing, checkpoint_key)
+
+    code_deindent = textwrap.dedent(code_string)
     if True:
       print("Code to run:\n")
-      print(code_string)
+      print(code_deindent)
 
     ##shell.run_cell(code_string)
-    #print(ipy.ev(code_string))
-    #print(ipy.run_code(code_string)) ?
+    print(ipy.ex(code_deindent))
+    #print(ipy.run_code(code_deindent)) ?
 
   @staticmethod
   def get_leading_comment(code_string: str) -> str:
@@ -89,6 +93,11 @@ class CheckpointManager:
     if leading_line.startswith("#"):
       return leading_line
     return ""
+
+  #@staticmethof
+  #def deindent(code_string: str) -> str:
+  #  # find indentation of first non-blank line
+
 
   #@staticmethod
   #def scene_get_state(scene_showing):  
