@@ -32,7 +32,8 @@ class SimpleTest(MovingCameraScene):
     after = Text("Generation").to_edge(DOWN)
     self.play(Write(after))
 
-# on fedora (during development)
-#   # dnf install poetry
-# poetry new --src manim-interactive
+    # --- 3. checkpoint after test section ---
+    other = Text("NEXT").to_edge(RIGHT)
+    self.play(Write(other))
+
 
