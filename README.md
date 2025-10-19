@@ -1,4 +1,4 @@
-# manim community 'interactive' plugin
+# Manim Community Edition 'interactive' plugin
 
 ## Getting Started
 
@@ -15,8 +15,7 @@ There are several components that require installation:
 First you will want to [install manim](https://docs.manim.community/en/stable/installation.html). Make sure it is the Manim Community edition, and not the original 3Blue1Brown Manim version. 
 
 In addition, we will be using the OpenGL renderer 
-(which is not exactly the same as the regular Cairo renderer).  
-The reason is that the Cairo one renders to video files fine, 
+(which is not exactly the same as the regular Cairo renderer).  The reason is that the Cairo one renders to video files fine, 
 but isn't really intended for 'realtime/interactive' usage 
 (unless you are prepared to wait for lots of video regeneration).
 
@@ -31,8 +30,8 @@ dnf install mesa-libGL libglvnd-devel
 dnf provides '*/libGL.so'
 ```
 
-Then install the package from source or `pip install manim_interactive` 
-(you can also use `uv pip install manim_interactive`).
+Then install this plugin `pip install manim_interactive` 
+(you can also use `uv pip install manim_interactive`) - or install from source (for debugging, see below).
 
 Also install the `manimvs` extension in `vscode`.  
 I chose to base this plugin on that that extension, since it does not depend on `3b1t manim` to run.
