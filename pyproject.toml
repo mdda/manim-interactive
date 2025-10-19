@@ -1,0 +1,31 @@
+[tool.poetry]
+name = "manim-interactive"
+version = "0.1.0"
+description = ""
+authors = ["Martin Andrews <manim-plugin@mdda.net>"]
+readme = "README.md"
+packages = [{include = "manim_interactive", from = "src"}]
+classifiers= [
+	"Development Status :: 4 - Beta",
+	"License :: OSI Approved :: MIT License",
+	"Topic :: Scientific/Engineering",
+	"Topic :: Multimedia :: Video",
+	"Topic :: Multimedia :: Graphics",
+	"Programming Language :: Python :: 3.13",
+	"Natural Language :: English",
+]
+
+[tool.poetry.dependencies]
+python = "^3.13"
+manim = ">=0.18"
+ipython =">=9.5.0"
+pyperclip = ">=1.11.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.plugins."manim.plugins"]
+"manim_interactive" = "manim_interactive"
+#"manim_interactive" = "module:object.attr"
