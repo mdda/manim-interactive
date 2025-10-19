@@ -5,9 +5,8 @@ import textwrap
 from manim import Scene, Mobject
 
 
-
 # Cleans up interface when uncommented
-#__all__ = 'checkpoint_paste'.split()
+__all__ = 'checkpoint_paste'.split()
 
 
 # This is a heavily modified version of the code in 3b3t manim:
@@ -75,7 +74,7 @@ class CheckpointManager:
     code_string = pyperclip.paste()
     checkpoint_key = self.get_leading_comment(code_string)
     if len(checkpoint_key)>0:
-      print(f"Checkpointing : {checkpoint_key=}")
+      #print(f"Checkpointing : {checkpoint_key=}")
       self.handle_checkpoint_key(scene_showing, checkpoint_key)
 
     code_deindent = textwrap.dedent(code_string)
@@ -84,8 +83,8 @@ class CheckpointManager:
       print(code_deindent)
 
     ##shell.run_cell(code_string)
-    print(ipy.ex(code_deindent))
-    #print(ipy.run_code(code_deindent)) ?
+    ipy.ex(code_deindent)
+    #ipy.run_code(code_deindent) # alternative?
 
   @staticmethod
   def get_leading_comment(code_string: str) -> str:
@@ -93,32 +92,6 @@ class CheckpointManager:
     if leading_line.startswith("#"):
       return leading_line
     return ""
-
-  #@staticmethof
-  #def deindent(code_string: str) -> str:
-  #  # find indentation of first non-blank line
-
-
-  #@staticmethod
-  #def scene_get_state(scene_showing):  
-  #  """
-  #    Here self=the scene in 'self' now
-  #    #   https://github.com/3b1b/manim/blob/master/manimlib/scene/scene.py#L882
-  #  """
- 
-  #@staticmethod
-  #def scene_restore_state(scene_showing, scene_prev_state):  
-  #  """
-  #    scene_prev_state gets copied to 'scene_showing' 
-  #    (i.e. scene_showing is updated)
-  #    #   https://github.com/3b1b/manim/blob/master/manimlib/scene/scene.py#L917
-  #  """
-  #  scene_showing.time = scene_prev_state.time
-  #  scene_showing.num_plays = scene_prev_state.num_plays
-  #  scene_showing.mobjects = [
-  #      mob.become(mob_copy)
-  #      for mob, mob_copy in scene_prev_state.mobjects_to_copies.items()
-  #  ]
 
   def handle_checkpoint_key(self, scene_showing, key: str):
     if not key:
@@ -143,6 +116,7 @@ class CheckpointManager:
   #def clear_checkpoints(self):
   #  self.checkpoint_states = dict()
 
+
 checkpoint_manager = CheckpointManager()
 
 # This is used in the iPython interactive session!
@@ -152,6 +126,10 @@ def checkpoint_paste():
   ipy = get_ipython()
   scene_showing = ipy.ev('self')
   checkpoint_manager.checkpoint_paste(ipy, scene_showing)
+
+
+# --- below here was just for initial development/experimentation ---
+
 
 def interactive_write_bogo():
   #print(f"Received:\n{code_string.replace(' ','#')}")
@@ -190,6 +168,4 @@ def interactive_show_variables():
 # get_ipython().ex()
 # get_ipython().run_code()
 # eval('''bogo=Text("BOGO");self.play(Write(bogo))''')
-
-
 
