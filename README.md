@@ -89,7 +89,7 @@ self.embed()
 (See the `testbed.py` file here to see how it looks in practice).
 
 Then, you can create a terminal in a separate window in VScode 
-("Create Terminal New Window = Ctrl-Shift-Alt-`"), and run there (updated for your file/scene):
+("Create Terminal New Window = Ctrl-Shift-Alt-`", or create a Terminal session and right-click in its task bar to "Move Terminal to New Window"), and run there (updated for your file/scene):
 ```bash
 manim testbed.py SimpleTest --renderer=opengl -p
 ```
