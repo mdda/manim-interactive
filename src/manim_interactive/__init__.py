@@ -13,7 +13,13 @@ __all__ = 'checkpoint_paste'.split()
 #   https://github.com/3b1b/manim/blob/master/manimlib/scene/scene.py#L882
 class SceneState():
   def __init__(self, scene: Scene, ignore: list[Mobject] | None = None):
-    self.time = scene.time
+    # See https://github.com/ManimCommunity/manim/blob/main/manim/scene/scene.py#L232
+    self.time = scene.renderer.time  #  This is a float
+    self.num_plays = scene.renderer.num_plays  #  This is an int (?)
+    
+    # See https://github.com/ManimCommunity/manim/blob/main/manim/scene/scene.py#L228
+    self.camera = scene.renderer.camera.copy()  # This is a Camera object
+    
     #self.num_plays = scene.num_plays
     self.mobjects_to_copies = OrderedDict.fromkeys(scene.mobjects)
     if ignore:
@@ -48,9 +54,17 @@ class SceneState():
   #  )
 
   def restore_scene(self, scene: Scene):
-    #scene.time = self.time
     scene.renderer.time = self.time
-    #scene.num_plays = self.num_plays
+    scene.renderer.num_plays = self.num_plays
+    
+    # Restore the camera
+    #scene.renderer.camera.euler_angles = self.camera.euler_angles.copy()
+    #scene.renderer.camera.model_matrix = self.camera.model_matrix.copy()
+    #scene.renderer.camera.frame_shape  = self.camera.frame_shape.copy()
+    scene.renderer.camera = self.camera.copy()
+    scene.renderer.camera.refresh_rotation_matrix()
+    
+    # Restore the objects in the scene
     scene.mobjects = [
       mob.become(mob_copy)
       for mob, mob_copy in self.mobjects_to_copies.items()
@@ -83,8 +97,8 @@ class CheckpointManager:
       print(code_deindent)
 
     ##shell.run_cell(code_string)
-    ipy.ex(code_deindent)
-    #ipy.run_code(code_deindent) # alternative?
+    ipy.ex(code_deindent)  # NB: No magics (?)
+    #ipy.run_code(code_deindent) # alternative?  (Needs await)
 
   @staticmethod
   def get_leading_comment(code_string: str) -> str:
